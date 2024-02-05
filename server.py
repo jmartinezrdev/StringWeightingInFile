@@ -55,6 +55,17 @@ def process_string(cadena):
 
 
 def manage_client(client_socket):
+    """
+    This function handles communication with a client on the server.
+    It receives data from the client, processes the received string
+    using an external function called process_string(),
+    sends the result to the client, and continues to receive and process data
+    until the client closes the connection.
+
+    :param client_socket: socket object representing the connection to a client
+    :return: sends the result of the processed string to the client. 
+
+    """
     while True:
         data = client_socket.recv(1024)
         if not data:
