@@ -33,6 +33,38 @@ def calculate_metric(string):
 
     return metrics
 
+
+def process_string(cadena):
+    """
+    This function processes a string under established rules.
+
+    :param string: String to parse.  
+    :return: The value obtained from the metric calculation.
+    :rtype: float
+    """
+
+    """ Converts all characters in the string to lowercase, thus simplifying
+      the analysis of any of these variants (aa, AA, aA, Aa) """
+    if 'aa' in cadena.lower():
+        # If the rule is detected, the metric value of the string will be 1000
+        logging.warning(f"Double 'a' rule detected >> '{cadena}'")
+        return 1000
+    else:
+        # Otherwise, the chain metric is calculated
+        return calculate_metric(cadena)
+
+
+def manage_client(client_socket):
+    while True:
+        data = client_socket.recv(1024)
+        if not data:
+            break
+        string = data.decode().strip()
+        weight = process_string(string)
+        client_socket.send(str(weight).encode())
+    client_socket.close()
+
+
 def start_server():
     """
     This function starts a basic TCP server that listens on a preconfigured
@@ -46,7 +78,13 @@ def start_server():
     host = 'localhost'
     port = 8888
     server_socket.bind((host, port))
+    server_socket.listen(5)
     logging.info("Server started. Listening on port " + str(port) + "...")
+    while True:
+        client_socket, _ = server_socket.accept()
+        logging.info("Client connected.")
+        manage_client(client_socket)
+
 
 if __name__ == "__main__":
     start_server()
