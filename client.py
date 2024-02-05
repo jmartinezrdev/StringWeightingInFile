@@ -1,5 +1,22 @@
 import socket
 import logging
+import string
+import random
+import time
+
+def generate_random_strings():
+    """
+    This function generates a random string of characters and spaces,
+     where the length of the string, the number of spaces and the positions
+      of the spaces are generated randomly.
+    
+    """
+    length = random.randint(50, 100)
+    num_spaces = random.randint(3, 5)
+    spaces_indices = random.sample(range(1, length - 1), num_spaces)
+    random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+
+    return random_string
 
 def start_client(string_quantity = 1000000):
     logging.basicConfig(filename='client.log', level=logging.INFO)
