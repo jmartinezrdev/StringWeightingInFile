@@ -26,4 +26,24 @@ source venv/bin/activate
 4. Install dependencies:
 There are no external dependencies for this project as it uses only Python's standard libraries.
 
+5. Run the server:
+Open a terminal or command prompt, navigate to the directory where you cloned the repository, and execute the following command to start the server:
+
+python server.py
+
+6. Run the client:
+In another terminal or command prompt, navigate to the same directory and execute the following command to start the client:
+
+python client.py
+
+7. Use the menu:
+The client will display a menu where you can select the "Start process" option to begin processing the strings. You can choose whether to define the number of strings to generate or use the default value of one million. You can also select "Exit" to close the application.
+
+## Contributions
+
+Feel free to submit pull requests with improvements or fixes to the project.
+
+## License
+
+This project is licensed under the MIT License.
 

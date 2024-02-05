@@ -34,7 +34,7 @@ def calculate_metric(string):
     return metrics
 
 
-def process_string(cadena):
+def process_string(string):
     """
     This function processes a string under established rules.
 
@@ -45,13 +45,13 @@ def process_string(cadena):
 
     """ Converts all characters in the string to lowercase, thus simplifying
       the analysis of any of these variants (aa, AA, aA, Aa) """
-    if 'aa' in cadena.lower():
+    if 'aa' in string.lower():
         # If the rule is detected, the metric value of the string will be 1000
-        logging.warning(f"Double 'a' rule detected >> '{cadena}'")
+        logging.warning(f"Double 'a' rule detected >> '{string}'")
         return 1000
     else:
         # Otherwise, the chain metric is calculated
-        return calculate_metric(cadena)
+        return calculate_metric(string)
 
 
 def manage_client(client_socket):
