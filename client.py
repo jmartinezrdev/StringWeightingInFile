@@ -19,6 +19,7 @@ def generate_random_strings():
         random_string = random_string[:index] + ' ' + random_string[index:]
     return random_string
 
+
 def start_client(string_quantity = 1000000):
     """
     This function starts a client that connects to a server and sends 
@@ -32,6 +33,8 @@ def start_client(string_quantity = 1000000):
     client_socket.connect(server_address)
     logging.info("Connected to server.")
 
+    start_time = time.time()
+
     with open('chains.txt', 'w') as f:
         for _ in range(string_quantity):
             string_obtained = generate_random_strings()
@@ -40,14 +43,22 @@ def start_client(string_quantity = 1000000):
             response = client_socket.recv(1024).decode()
             logging.info(f"String: {string_obtained.strip()}, Weight: {response}")
 
-    
-    logging.info(f"Process completed in seconds.")
+    end_time = time.time()
+    total_time = end_time - start_time
+    logging.info(f"Process completed in {total_time} seconds.")
     
     client_socket.close()
     print("Process completed.")
 
 
 def menu():
+    """
+    This function shows a menu to the user with the options 
+    that can be made in the application.
+
+    :return: Returns menu options and executes actions corresponding
+     to the user's choice
+    """
     while True:
         print("======= MENU =======")
         print("1. Start process")
@@ -61,13 +72,13 @@ def menu():
                     string_quantity = input("Please, define the quantity: ")
                     try:
                         string_quantity = int(string_quantity)
-                        # start_client(string_quantity)
+                        start_client(string_quantity)
                         break
                     except ValueError:
                         print("Error: You must enter a valid number.")
                 elif generated_option.lower() == "n":
                     # One million strings will be executed by default.
-                    # start_client()
+                    start_client()
                     break
                 else:
                     print("Error: Invalid option.")
