@@ -15,15 +15,30 @@ def generate_random_strings():
     num_spaces = random.randint(3, 5)
     spaces_indices = random.sample(range(1, length - 1), num_spaces)
     random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=length))
-
+    for index in spaces_indices:
+        random_string = random_string[:index] + ' ' + random_string[index:]
     return random_string
 
 def start_client(string_quantity = 1000000):
+    """
+    This function starts a client that connects to a server and sends 
+    a specified number of strings to the server for processing. 
+    In addition, the log events are recorded in a file called "client.log".
+     
+    """
     logging.basicConfig(filename='client.log', level=logging.INFO)
     server_address = ('localhost', 8888)
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect(server_address)
     logging.info("Connected to server.")
+
+    with open('chains.txt', 'w') as f:
+        for _ in range(string_quantity):
+            string_obtained = generate_random_strings()
+            f.write(string_obtained + '\n')
+            client_socket.send(string_obtained.encode())
+            response = client_socket.recv(1024).decode()
+            logging.info(f"String: {string_obtained.strip()}, Weight: {response}")
 
     
     logging.info(f"Process completed in seconds.")
