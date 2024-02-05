@@ -1,3 +1,20 @@
+import socket
+import logging
+
+def start_client(string_quantity = 1000000):
+    logging.basicConfig(filename='client.log', level=logging.INFO)
+    server_address = ('localhost', 8888)
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client_socket.connect(server_address)
+    logging.info("Connected to server.")
+
+    
+    logging.info(f"Process completed in seconds.")
+    
+    client_socket.close()
+    print("Process completed.")
+
+
 def menu():
     while True:
         print("======= MENU =======")
