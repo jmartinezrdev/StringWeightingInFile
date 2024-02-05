@@ -1,4 +1,6 @@
 import logging
+import socket
+
 def calculate_metric(string):
     count_letters = 0
     count_numbers = 0
@@ -23,3 +25,14 @@ def calculate_metric(string):
         logging.warning(error)
 
     return metrics
+
+def start_server():
+    logging.basicConfig(filename='server.log', level=logging.INFO)
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    host = 'localhost'
+    port = 8888
+    server_socket.bind((host, port))
+    logging.info("Server started. Listening on port " + str(port) + "...")
+
+if __name__ == "__main__":
+    start_server()
